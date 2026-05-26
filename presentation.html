@@ -3,161 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Презентация — Диагностика «Личностный рост» | Гимназия №45</title>
+    <title>Диагностика «Личностный рост»</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/shared.js"></script>
     <style>
         :root {
-            --gym-blue: #1e3a8a;
-            --gym-accent: #4f46e5;
+            --bg: #fbfbfd;
+            --surface: #ffffff;
+            --text: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+            --accent: #0071e3;
+            --accent-soft: rgba(0, 113, 227, 0.12);
+            --positive: #34c759;
+            --negative: #ff3b30;
+            --warn: #ff9500;
+            --radius: 18px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
-        .reveal { font-family: 'Segoe UI', system-ui, sans-serif; }
-        .reveal h1, .reveal h2 { color: var(--gym-blue); text-transform: none; }
-        .reveal h1 { font-size: 1.8em; }
-        .reveal h2 { font-size: 1.35em; }
-        .reveal .slides section { text-align: left; }
-        .title-slide { text-align: center !important; }
-        .title-slide img { width: 120px; margin-bottom: 0.5em; }
-        .title-slide .sub { color: #64748b; font-size: 0.55em; margin-top: 1em; }
-        .badge {
-            display: inline-block;
-            padding: 0.2em 0.6em;
-            border-radius: 6px;
-            font-size: 0.75em;
+
+        .reveal {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal .slides section {
+            padding: 0 48px;
+            box-sizing: border-box;
+            height: 100%;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .reveal .slides section.center-slide {
+            text-align: center;
+            align-items: center;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: inherit;
+            text-transform: none;
+            letter-spacing: -0.03em;
             font-weight: 600;
-            color: #fff;
+            color: var(--text);
+            line-height: 1.1;
+            margin: 0 0 0.35em;
         }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.72em; }
-        .card {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
-            border-left: 4px solid var(--gym-accent);
+
+        .reveal h1 { font-size: 2.4em; font-weight: 700; }
+        .reveal h2 { font-size: 1.55em; margin-bottom: 0.5em; }
+        .reveal h3 { font-size: 0.95em; font-weight: 500; color: var(--text-secondary); }
+
+        .reveal p, .reveal li {
+            font-size: 0.72em;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            font-weight: 400;
         }
-        .card.up { border-left-color: #10b981; }
-        .card.sp { border-left-color: #34d399; }
-        .card.sn { border-left-color: #fbbf24; }
-        .card.un { border-left-color: #ef4444; }
-        .chart-box { height: 420px; width: 100%; position: relative; }
-        .chart-box.sm { height: 320px; }
-        table.compact { font-size: 0.65em; width: 100%; border-collapse: collapse; }
-        table.compact th, table.compact td { border: 1px solid #e2e8f0; padding: 0.4em 0.6em; }
-        table.compact th { background: #1e3a8a; color: #fff; }
-        .highlight { color: #dc2626; font-weight: 600; }
-        .good { color: #059669; font-weight: 600; }
-        ul.compact { font-size: 0.85em; line-height: 1.5; }
-        .reveal .footer-link { font-size: 0.5em; color: #64748b; margin-top: 2em; }
-        .fragment.fade-up { transition: all 0.4s ease; }
+
+        .reveal .eyebrow {
+            font-size: 0.5em;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.6em;
+        }
+
+        .reveal .lead {
+            font-size: 0.85em;
+            color: var(--text-tertiary);
+            max-width: 28em;
+            margin: 0 auto;
+        }
+
+        .reveal .slide-body {
+            flex: 0 1 auto;
+            width: 100%;
+            max-height: calc(100% - 3.5em);
+            overflow: hidden;
+        }
+
+        /* Auto stagger — без кликов */
+        .stagger > * {
+            opacity: 0;
+            transform: translateY(28px);
+        }
+
+        .reveal .slides section.present .stagger > * {
+            animation: riseIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .reveal .slides section.present .stagger > *:nth-child(1) { animation-delay: 0.06s; }
+        .reveal .slides section.present .stagger > *:nth-child(2) { animation-delay: 0.14s; }
+        .reveal .slides section.present .stagger > *:nth-child(3) { animation-delay: 0.22s; }
+        .reveal .slides section.present .stagger > *:nth-child(4) { animation-delay: 0.30s; }
+        .reveal .slides section.present .stagger > *:nth-child(5) { animation-delay: 0.38s; }
+        .reveal .slides section.present .stagger > *:nth-child(6) { animation-delay: 0.46s; }
+
+        @keyframes riseIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal .chart-wrap {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            max-height: 58vh;
+            position: relative;
+            margin-top: 0.25em;
+        }
+
+        .reveal .chart-wrap canvas {
+            max-height: 100% !important;
+        }
+
+        /* Stat cards */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 0.5em;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.1em 1.2em;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card .num {
+            font-size: 1.6em;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .stat-card .num.good { color: var(--positive); }
+        .stat-card .num.bad { color: var(--negative); }
+
+        .stat-card .lbl {
+            font-size: 0.48em;
+            color: var(--text-tertiary);
+            margin-top: 0.35em;
+            line-height: 1.35;
+        }
+
+        /* Level pills */
+        .levels-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .level-pill {
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 0.85em 1em;
+            box-shadow: var(--shadow);
+            border-left: 3px solid var(--accent);
+        }
+
+        .level-pill.up { border-left-color: #10b981; }
+        .level-pill.sp { border-left-color: #34d399; }
+        .level-pill.sn { border-left-color: #fbbf24; }
+        .level-pill.un { border-left-color: #ef4444; }
+
+        .level-pill strong {
+            font-size: 0.62em;
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.25em;
+        }
+
+        .level-pill span {
+            font-size: 0.48em;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* List */
+        .apple-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .apple-list li {
+            font-size: 0.68em;
+            padding: 0.55em 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--text);
+        }
+
+        .apple-list li:last-child { border-bottom: none; }
+
+        .apple-list strong { font-weight: 600; color: var(--text); }
+
+        /* Class comparison cards */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 0.4em;
+        }
+
+        .class-card {
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 0.7em 0.5em;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .class-card.warn { background: #fff5f5; }
+
+        .class-card .cls {
+            font-size: 0.55em;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .class-card .avg {
+            font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin: 0.15em 0;
+        }
+
+        .class-card .meta {
+            font-size: 0.38em;
+            color: var(--text-tertiary);
+            line-height: 1.35;
+        }
+
+        .reveal .controls {
+            color: var(--text-tertiary);
+        }
+
+        .reveal .progress span {
+            background: var(--accent);
+        }
+
+        .reveal a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .reveal a:hover { text-decoration: underline; }
+
+        .reveal .dark-slide {
+            background: linear-gradient(165deg, #1d1d1f 0%, #2c2c2e 100%) !important;
+        }
+
+        .reveal .dark-slide h1,
+        .reveal .dark-slide p { color: #f5f5f7; }
+        .reveal .dark-slide .lead { color: #a1a1a6; }
+
+        .reveal .slide-number {
+            font-family: inherit;
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
     </style>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
 
-<section class="title-slide" data-background-gradient="linear-gradient(160deg, #eff6ff, #ffffff)">
-    <img src="assets/logo-gym45.svg" alt="Гимназия 45">
-    <h1>Аналитическая справка</h1>
-    <p>Диагностика «Личностный рост»</p>
-    <p class="sub">МБОУ Гимназия №45 · Комсомольск-на-Амуре<br>127 обучающихся · классы 9А, 9Б, 10А, 10Б, 11А</p>
-</section>
-
-<section>
-    <h2>Цель диагностики</h2>
-    <ul class="compact fragment fade-up">
-        <li>Изучить ценностно-смысловые ориентации обучающихся 9–11 классов</li>
-        <li>Описать ситуацию <strong>в школе в целом и по классам</strong></li>
-        <li>Выделить сильные стороны и зоны риска</li>
-        <li>Сформулировать рекомендации для плана воспитательной работы</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Расшифровка уровней</h2>
-    <div class="grid-4">
-        <div class="card up fragment"><strong>УП</strong> — устойчиво-позитивное<br>Позитив проявляется устойчиво, в разных ситуациях.</div>
-        <div class="card sp fragment"><strong>СП</strong> — ситуативно-позитивное<br>Позитив есть, но зависит от обстоятельств.</div>
-        <div class="card sn fragment"><strong>СН</strong> — ситуативно-негативное<br>Негатив в ряде ситуаций, не всегда.</div>
-        <div class="card un fragment"><strong>УН</strong> — устойчиво-негативное<br>Негатив устойчив, требует целенаправленной работы.</div>
+<section class="center-slide" data-background-color="#fbfbfd">
+    <div class="stagger" style="max-width: 90%;">
+        <p class="eyebrow">Аналитическая справка</p>
+        <h1>Личностный рост</h1>
+        <p class="lead">127 обучающихся · 9А, 9Б, 10А, 10Б, 11А<br>МБОУ Гимназия №45, Комсомольск-на-Амуре</p>
     </div>
 </section>
 
-<section>
-    <h2>Резюме: ресурс школы</h2>
-    <ul class="compact">
-        <li class="fragment"><span class="good">Труд — 98%</span> позитивных ответов</li>
-        <li class="fragment">Сильные показатели: <strong>знания, природа, семья, духовное «Я»</strong></li>
-        <li class="fragment">На этих опорах можно строить классные часы, проекты, наставничество</li>
-    </ul>
+<section data-background-color="#fbfbfd">
+    <h2>Цель диагностики</h2>
+    <div class="slide-body stagger">
+        <ul class="apple-list">
+            <li>Изучить <strong>ценностно-смысловые ориентации</strong> обучающихся 9–11 классов</li>
+            <li>Описать ситуацию <strong>в школе в целом и по классам</strong></li>
+            <li>Выделить сильные стороны и зоны риска</li>
+            <li>Сформулировать рекомендации для плана воспитательной работы</li>
+        </ul>
+    </div>
 </section>
 
-<section>
-    <h2>Резюме: зоны риска</h2>
-    <ul class="compact">
-        <li class="fragment"><span class="highlight">Душевное «Я» — 33%</span> позитива (67% негатив)</li>
-        <li class="fragment"><span class="highlight">Культура — 37%</span> позитива</li>
-        <li class="fragment">Приоритетный класс: <strong>9Б</strong> (культура 24%, душевное «Я» 28%)</li>
-    </ul>
+<section data-background-color="#fbfbfd">
+    <h2>Уровни ответов</h2>
+    <div class="slide-body stagger levels-grid">
+        <div class="level-pill up"><strong>УП — устойчиво-позитивное</strong><span>Позитив проявляется устойчиво, в разных ситуациях.</span></div>
+        <div class="level-pill sp"><strong>СП — ситуативно-позитивное</strong><span>Позитив есть, но зависит от обстоятельств.</span></div>
+        <div class="level-pill sn"><strong>СН — ситуативно-негативное</strong><span>Негатив в ряде ситуаций, не всегда.</span></div>
+        <div class="level-pill un"><strong>УН — устойчиво-негативное</strong><span>Негатив устойчив, нужна целенаправленная работа.</span></div>
+    </div>
 </section>
 
-<section>
-    <h2>Общий профиль школы</h2>
-    <div class="chart-box"><canvas id="presRadar"></canvas></div>
+<section data-background-color="#fbfbfd">
+    <h2>Ресурс школы</h2>
+    <h3>Сильные опоры для воспитательной работы</h3>
+    <div class="slide-body stagger stat-row">
+        <div class="stat-card">
+            <div class="num good">98%</div>
+            <div class="lbl">позитива по шкале «Труд»</div>
+        </div>
+        <div class="stat-card">
+            <div class="num good">высокие</div>
+            <div class="lbl">знания, природа, семья, духовное «Я»</div>
+        </div>
+        <div class="stat-card">
+            <div class="num">→</div>
+            <div class="lbl">классные часы, проекты, наставничество</div>
+        </div>
+    </div>
 </section>
 
-<section>
-    <h2>Отношение к Отечеству — по классам</h2>
-    <div class="chart-box"><canvas id="presOtechestvo"></canvas></div>
+<section data-background-color="#fbfbfd">
+    <h2>Зоны риска</h2>
+    <h3>Требуют приоритетного внимания</h3>
+    <div class="slide-body stagger stat-row">
+        <div class="stat-card">
+            <div class="num bad">33%</div>
+            <div class="lbl">позитива — душевное «Я»</div>
+        </div>
+        <div class="stat-card">
+            <div class="num bad">37%</div>
+            <div class="lbl">позитива — культура</div>
+        </div>
+        <div class="stat-card">
+            <div class="num bad">9Б</div>
+            <div class="lbl">наименьший средний индекс; культура 24%</div>
+        </div>
+    </div>
 </section>
 
-<section>
-    <h2>Культура — по классам</h2>
-    <div class="chart-box"><canvas id="presCulture"></canvas></div>
+<section data-background-color="#fbfbfd">
+    <h2>Профиль школы</h2>
+    <h3>Индекс позитивности по 13 шкалам</h3>
+    <div class="slide-body chart-wrap"><canvas id="presRadar"></canvas></div>
 </section>
 
-<section>
-    <h2>Средний уровень по классам</h2>
-    <div class="chart-box sm"><canvas id="presClasses"></canvas></div>
+<section data-background-color="#fbfbfd">
+    <h2>Отечество</h2>
+    <h3>Сравнение классов · доли УП, СП, СН, УН</h3>
+    <div class="slide-body chart-wrap"><canvas id="presOtechestvo"></canvas></div>
 </section>
 
-<section>
+<section data-background-color="#fbfbfd">
+    <h2>Культура</h2>
+    <h3>Сравнение классов</h3>
+    <div class="slide-body chart-wrap"><canvas id="presCulture"></canvas></div>
+</section>
+
+<section data-background-color="#fbfbfd">
+    <h2>Классы</h2>
+    <h3>Средний индекс позитивности</h3>
+    <div class="slide-body chart-wrap" style="max-height: 50vh;"><canvas id="presClasses"></canvas></div>
+</section>
+
+<section data-background-color="#fbfbfd">
     <h2>Сводка по классам</h2>
-    <table class="compact">
-        <tr><th>Класс</th><th>n</th><th>Средний</th><th>Труд</th><th>Культура</th><th>Душевное «Я»</th></tr>
-        <tr><td>10Б</td><td>20</td><td>69%</td><td>100%</td><td>55%</td><td>35%</td></tr>
-        <tr><td>11А</td><td>34</td><td>66%</td><td>100%</td><td>41%</td><td>35%</td></tr>
-        <tr><td>9А</td><td>26</td><td>66%</td><td>96%</td><td>35%</td><td>35%</td></tr>
-        <tr><td>10А</td><td>18</td><td>64%</td><td>100%</td><td>33%</td><td>33%</td></tr>
-        <tr><td class="highlight">9Б</td><td>29</td><td class="highlight">61%</td><td>93%</td><td class="highlight">24%</td><td class="highlight">28%</td></tr>
-    </table>
+    <div class="slide-body stagger class-grid" id="classCards"></div>
 </section>
 
-<section>
-    <h2>Класс 9Б — в фокусе</h2>
-    <ul class="compact fragment fade-up">
-        <li>Наименьший средний индекс по школе</li>
-        <li>Культура — наихудший показатель (24% позитива)</li>
-        <li>Рекомендуется: психолог, классный руководитель, культурные мероприятия</li>
-    </ul>
+<section data-background-color="#fbfbfd">
+    <h2>Класс 9Б</h2>
+    <h3>В фокусе внимания</h3>
+    <div class="slide-body stagger">
+        <ul class="apple-list">
+            <li>Наименьший <strong>средний индекс</strong> по школе — 61%</li>
+            <li><strong>Культура</strong> — 24% позитива (наихудший показатель)</li>
+            <li>Рекомендуется: психолог, классный руководитель, культурные мероприятия</li>
+        </ul>
+    </div>
 </section>
 
-<section>
-    <h2>Рекомендации для школы</h2>
-    <ul class="compact">
-        <li class="fragment">Психологическая поддержка, тренинги саморегуляции</li>
-        <li class="fragment">Культурно-просветительские мероприятия</li>
-        <li class="fragment">Волонтёрство, наставничество, проекты</li>
-        <li class="fragment">Работа с родителями (без персональных данных)</li>
-    </ul>
+<section data-background-color="#fbfbfd">
+    <h2>Рекомендации</h2>
+    <div class="slide-body stagger">
+        <ul class="apple-list">
+            <li>Психологическая поддержка, тренинги саморегуляции</li>
+            <li>Культурно-просветительские мероприятия</li>
+            <li>Волонтёрство, наставничество, проектная деятельность</li>
+            <li>Работа с родителями — без персональных данных</li>
+        </ul>
+    </div>
 </section>
 
-<section class="title-slide" data-background-gradient="linear-gradient(160deg, #1e3a8a, #312e81)">
-    <h1 style="color:#fff;">Спасибо за внимание</h1>
-    <p style="color:#e0e7ff;">Интерактивный отчёт с фильтром по классам:</p>
-    <p><a href="index.html" style="color:#fbbf24;">открыть сайт статистики</a></p>
-    <p class="sub" style="color:#94a3b8;">МБОУ Гимназия №45 · Комсомольск-на-Амуре</p>
+<section class="center-slide dark-slide" data-background-color="#1d1d1f">
+    <div class="stagger">
+        <h1>Спасибо</h1>
+        <p class="lead">Интерактивный отчёт с фильтром по классам и шкалам</p>
+        <p style="margin-top: 1.2em;"><a href="index.html" style="color: #2997ff;">survey-report → открыть сайт</a></p>
+    </div>
 </section>
 
 </div>
@@ -166,41 +421,98 @@
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
 const charts = {};
+const CHART_FONT = "'Inter', -apple-system, sans-serif";
+
+Chart.defaults.font.family = CHART_FONT;
+Chart.defaults.color = '#6e6e73';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 16;
+
+function restartStagger(slide) {
+    if (!slide) return;
+    slide.querySelectorAll('.stagger > *').forEach(el => {
+        el.style.animation = 'none';
+        void el.offsetHeight;
+        el.style.animation = '';
+    });
+}
+
+function buildClassCards(classes, data) {
+    const rows = [
+        { cls: '10Б', n: 20, avg: 69, trud: 100, cult: 55, soul: 35 },
+        { cls: '11А', n: 34, avg: 66, trud: 100, cult: 41, soul: 35 },
+        { cls: '9А', n: 26, avg: 66, trud: 96, cult: 35, soul: 35 },
+        { cls: '10А', n: 18, avg: 64, trud: 100, cult: 33, soul: 33 },
+        { cls: '9Б', n: 29, avg: 61, trud: 93, cult: 24, soul: 28, warn: true }
+    ];
+    const el = document.getElementById('classCards');
+    el.innerHTML = rows.map(r => `
+        <div class="class-card ${r.warn ? 'warn' : ''}">
+            <div class="cls">${r.cls}</div>
+            <div class="avg" style="color:${r.warn ? '#ff3b30' : '#1d1d1f'}">${r.avg}%</div>
+            <div class="meta">n=${r.n}<br>труд ${r.trud}%<br>культ. ${r.cult}%</div>
+        </div>
+    `).join('');
+}
 
 async function main() {
     const data = await fetch('data.json').then(r => r.json());
     const { LEVELS, LEVEL_INFO, COLORS } = SurveyApp;
     const classes = SurveyApp.classList(data);
+    buildClassCards(classes, data);
+
+    const chartOpts = {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 900, easing: 'easeOutQuart' },
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { font: { size: 11 }, color: '#6e6e73' }
+            }
+        }
+    };
 
     function compareChart(canvasId, scaleKey) {
         const ctx = document.getElementById(canvasId).getContext('2d');
         charts[canvasId] = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: classes.map(c => c),
+                labels: classes,
                 datasets: LEVELS.map(lvl => ({
                     label: LEVEL_INFO[lvl].short,
                     data: classes.map(cls => {
                         const sd = data.data[cls][scaleKey];
-                        const t = Object.values(sd).reduce((a,b)=>a+b,0);
-                        return t ? (sd[lvl]||0)/t*100 : 0;
+                        const t = Object.values(sd).reduce((a, b) => a + b, 0);
+                        return t ? (sd[lvl] || 0) / t * 100 : 0;
                     }),
                     backgroundColor: COLORS[lvl],
+                    borderRadius: 4,
                     stack: 's'
                 }))
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } },
-                scales: { x: { stacked: true }, y: { stacked: true, max: 100, ticks: { callback: v => v+'%' } } }
+                ...chartOpts,
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false },
+                        ticks: { font: { size: 12, weight: '600' }, color: '#1d1d1f' }
+                    },
+                    y: {
+                        stacked: true,
+                        max: 100,
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { callback: v => v + '%', font: { size: 10 } }
+                    }
+                }
             }
         });
     }
 
     const all = data.data['Все'];
     const scores = data.scales.map(s => ({
-        label: SurveyApp.scaleShort(s).slice(0, 22),
+        label: SurveyApp.scaleShort(s).replace(/подростка к /gi, '').slice(0, 18),
         v: SurveyApp.positivityIndex(all[s])
     }));
 
@@ -210,16 +522,26 @@ async function main() {
             labels: scores.map(x => x.label),
             datasets: [{
                 data: scores.map(x => x.v),
-                backgroundColor: 'rgba(30,58,138,0.2)',
-                borderColor: '#1e3a8a',
-                borderWidth: 2
+                backgroundColor: 'rgba(0, 113, 227, 0.15)',
+                borderColor: '#0071e3',
+                borderWidth: 2,
+                pointBackgroundColor: '#0071e3',
+                pointRadius: 3
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { r: { min: 0, max: 100, ticks: { display: false } } },
-            plugins: { legend: { display: false } }
+            ...chartOpts,
+            plugins: { legend: { display: false } },
+            scales: {
+                r: {
+                    min: 0,
+                    max: 100,
+                    angleLines: { color: 'rgba(0,0,0,0.06)' },
+                    grid: { color: 'rgba(0,0,0,0.06)' },
+                    pointLabels: { font: { size: 9 }, color: '#6e6e73' },
+                    ticks: { display: false }
+                }
+            }
         }
     });
 
@@ -231,43 +553,66 @@ async function main() {
     );
     const schoolAvg = data.scales.reduce((s, sc) => s + SurveyApp.positivityIndex(all[sc]), 0) / data.scales.length;
 
-    charts.presClasses = new Chart(document.getElementById('presClasses'), {
+    charts.presClasses = new Chart(document.getElementById('presClasses').getContext('2d'), {
         type: 'bar',
         data: {
             labels: classes,
             datasets: [{
-                label: 'Средний индекс %',
+                label: 'Класс',
                 data: avgs,
-                backgroundColor: '#4f46e5'
+                backgroundColor: '#0071e3',
+                borderRadius: 8,
+                barPercentage: 0.55
             }, {
                 label: 'Школа',
                 data: classes.map(() => schoolAvg),
                 type: 'line',
-                borderColor: '#dc2626',
+                borderColor: '#ff3b30',
                 borderWidth: 2,
+                borderDash: [6, 4],
                 pointRadius: 0,
                 fill: false
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { y: { min: 50, max: 80 } }
+            ...chartOpts,
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 12, weight: '600' } } },
+                y: {
+                    min: 55,
+                    max: 75,
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    ticks: { callback: v => v + '%' }
+                }
+            }
         }
     });
 
     const deck = new Reveal({
         hash: true,
-        transition: 'slide',
-        transitionSpeed: 'default',
+        transition: 'fade',
+        transitionSpeed: 'fast',
+        backgroundTransition: 'fade',
         controls: true,
         progress: true,
         center: false,
-        width: 1100,
-        height: 700
+        width: 1280,
+        height: 720,
+        margin: 0.06,
+        slideNumber: 'c/t',
+        keyboard: true
     });
-    deck.initialize();
-    deck.on('slidechanged', () => Object.values(charts).forEach(c => c && c.resize && c.resize()));
+
+    await deck.initialize();
+
+    deck.on('slidechanged', e => {
+        restartStagger(e.currentSlide);
+        requestAnimationFrame(() => {
+            Object.values(charts).forEach(c => c?.resize?.());
+        });
+    });
+
+    restartStagger(deck.getCurrentSlide());
 }
 
 main().catch(e => alert('Ошибка загрузки: ' + e.message));
