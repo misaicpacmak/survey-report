@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Презентация — Диагностика «Личностный рост» | Гимназия №45</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/shared.js"></script>
+    <style>
+        :root {
+            --gym-blue: #1e3a8a;
+            --gym-accent: #4f46e5;
+        }
+        .reveal { font-family: 'Segoe UI', system-ui, sans-serif; }
+        .reveal h1, .reveal h2 { color: var(--gym-blue); text-transform: none; }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.35em; }
+        .reveal .slides section { text-align: left; }
+        .title-slide { text-align: center !important; }
+        .title-slide img { width: 120px; margin-bottom: 0.5em; }
+        .title-slide .sub { color: #64748b; font-size: 0.55em; margin-top: 1em; }
+        .badge {
+            display: inline-block;
+            padding: 0.2em 0.6em;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #fff;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.72em; }
+        .card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            border-left: 4px solid var(--gym-accent);
+        }
+        .card.up { border-left-color: #10b981; }
+        .card.sp { border-left-color: #34d399; }
+        .card.sn { border-left-color: #fbbf24; }
+        .card.un { border-left-color: #ef4444; }
+        .chart-box { height: 420px; width: 100%; position: relative; }
+        .chart-box.sm { height: 320px; }
+        table.compact { font-size: 0.65em; width: 100%; border-collapse: collapse; }
+        table.compact th, table.compact td { border: 1px solid #e2e8f0; padding: 0.4em 0.6em; }
+        table.compact th { background: #1e3a8a; color: #fff; }
+        .highlight { color: #dc2626; font-weight: 600; }
+        .good { color: #059669; font-weight: 600; }
+        ul.compact { font-size: 0.85em; line-height: 1.5; }
+        .reveal .footer-link { font-size: 0.5em; color: #64748b; margin-top: 2em; }
+        .fragment.fade-up { transition: all 0.4s ease; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section class="title-slide" data-background-gradient="linear-gradient(160deg, #eff6ff, #ffffff)">
+    <img src="assets/logo-gym45.svg" alt="Гимназия 45">
+    <h1>Аналитическая справка</h1>
+    <p>Диагностика «Личностный рост»</p>
+    <p class="sub">МБОУ Гимназия №45 · Комсомольск-на-Амуре<br>127 обучающихся · классы 9А, 9Б, 10А, 10Б, 11А</p>
+</section>
+
+<section>
+    <h2>Цель диагностики</h2>
+    <ul class="compact fragment fade-up">
+        <li>Изучить ценностно-смысловые ориентации обучающихся 9–11 классов</li>
+        <li>Описать ситуацию <strong>в школе в целом и по классам</strong></li>
+        <li>Выделить сильные стороны и зоны риска</li>
+        <li>Сформулировать рекомендации для плана воспитательной работы</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Расшифровка уровней</h2>
+    <div class="grid-4">
+        <div class="card up fragment"><strong>УП</strong> — устойчиво-позитивное<br>Позитив проявляется устойчиво, в разных ситуациях.</div>
+        <div class="card sp fragment"><strong>СП</strong> — ситуативно-позитивное<br>Позитив есть, но зависит от обстоятельств.</div>
+        <div class="card sn fragment"><strong>СН</strong> — ситуативно-негативное<br>Негатив в ряде ситуаций, не всегда.</div>
+        <div class="card un fragment"><strong>УН</strong> — устойчиво-негативное<br>Негатив устойчив, требует целенаправленной работы.</div>
+    </div>
+</section>
+
+<section>
+    <h2>Резюме: ресурс школы</h2>
+    <ul class="compact">
+        <li class="fragment"><span class="good">Труд — 98%</span> позитивных ответов</li>
+        <li class="fragment">Сильные показатели: <strong>знания, природа, семья, духовное «Я»</strong></li>
+        <li class="fragment">На этих опорах можно строить классные часы, проекты, наставничество</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Резюме: зоны риска</h2>
+    <ul class="compact">
+        <li class="fragment"><span class="highlight">Душевное «Я» — 33%</span> позитива (67% негатив)</li>
+        <li class="fragment"><span class="highlight">Культура — 37%</span> позитива</li>
+        <li class="fragment">Приоритетный класс: <strong>9Б</strong> (культура 24%, душевное «Я» 28%)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Общий профиль школы</h2>
+    <div class="chart-box"><canvas id="presRadar"></canvas></div>
+</section>
+
+<section>
+    <h2>Отношение к Отечеству — по классам</h2>
+    <div class="chart-box"><canvas id="presOtechestvo"></canvas></div>
+</section>
+
+<section>
+    <h2>Культура — по классам</h2>
+    <div class="chart-box"><canvas id="presCulture"></canvas></div>
+</section>
+
+<section>
+    <h2>Средний уровень по классам</h2>
+    <div class="chart-box sm"><canvas id="presClasses"></canvas></div>
+</section>
+
+<section>
+    <h2>Сводка по классам</h2>
+    <table class="compact">
+        <tr><th>Класс</th><th>n</th><th>Средний</th><th>Труд</th><th>Культура</th><th>Душевное «Я»</th></tr>
+        <tr><td>10Б</td><td>20</td><td>69%</td><td>100%</td><td>55%</td><td>35%</td></tr>
+        <tr><td>11А</td><td>34</td><td>66%</td><td>100%</td><td>41%</td><td>35%</td></tr>
+        <tr><td>9А</td><td>26</td><td>66%</td><td>96%</td><td>35%</td><td>35%</td></tr>
+        <tr><td>10А</td><td>18</td><td>64%</td><td>100%</td><td>33%</td><td>33%</td></tr>
+        <tr><td class="highlight">9Б</td><td>29</td><td class="highlight">61%</td><td>93%</td><td class="highlight">24%</td><td class="highlight">28%</td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>Класс 9Б — в фокусе</h2>
+    <ul class="compact fragment fade-up">
+        <li>Наименьший средний индекс по школе</li>
+        <li>Культура — наихудший показатель (24% позитива)</li>
+        <li>Рекомендуется: психолог, классный руководитель, культурные мероприятия</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Рекомендации для школы</h2>
+    <ul class="compact">
+        <li class="fragment">Психологическая поддержка, тренинги саморегуляции</li>
+        <li class="fragment">Культурно-просветительские мероприятия</li>
+        <li class="fragment">Волонтёрство, наставничество, проекты</li>
+        <li class="fragment">Работа с родителями (без персональных данных)</li>
+    </ul>
+</section>
+
+<section class="title-slide" data-background-gradient="linear-gradient(160deg, #1e3a8a, #312e81)">
+    <h1 style="color:#fff;">Спасибо за внимание</h1>
+    <p style="color:#e0e7ff;">Интерактивный отчёт с фильтром по классам:</p>
+    <p><a href="index.html" style="color:#fbbf24;">открыть сайт статистики</a></p>
+    <p class="sub" style="color:#94a3b8;">МБОУ Гимназия №45 · Комсомольск-на-Амуре</p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+const charts = {};
+
+async function main() {
+    const data = await fetch('data.json').then(r => r.json());
+    const { LEVELS, LEVEL_INFO, COLORS } = SurveyApp;
+    const classes = SurveyApp.classList(data);
+
+    function compareChart(canvasId, scaleKey) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        charts[canvasId] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: classes.map(c => c),
+                datasets: LEVELS.map(lvl => ({
+                    label: LEVEL_INFO[lvl].short,
+                    data: classes.map(cls => {
+                        const sd = data.data[cls][scaleKey];
+                        const t = Object.values(sd).reduce((a,b)=>a+b,0);
+                        return t ? (sd[lvl]||0)/t*100 : 0;
+                    }),
+                    backgroundColor: COLORS[lvl],
+                    stack: 's'
+                }))
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: { x: { stacked: true }, y: { stacked: true, max: 100, ticks: { callback: v => v+'%' } } }
+            }
+        });
+    }
+
+    const all = data.data['Все'];
+    const scores = data.scales.map(s => ({
+        label: SurveyApp.scaleShort(s).slice(0, 22),
+        v: SurveyApp.positivityIndex(all[s])
+    }));
+
+    charts.presRadar = new Chart(document.getElementById('presRadar').getContext('2d'), {
+        type: 'radar',
+        data: {
+            labels: scores.map(x => x.label),
+            datasets: [{
+                data: scores.map(x => x.v),
+                backgroundColor: 'rgba(30,58,138,0.2)',
+                borderColor: '#1e3a8a',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { r: { min: 0, max: 100, ticks: { display: false } } },
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    compareChart('presOtechestvo', data.scales[1]);
+    compareChart('presCulture', data.scales[5]);
+
+    const avgs = classes.map(c =>
+        data.scales.reduce((s, sc) => s + SurveyApp.positivityIndex(data.data[c][sc]), 0) / data.scales.length
+    );
+    const schoolAvg = data.scales.reduce((s, sc) => s + SurveyApp.positivityIndex(all[sc]), 0) / data.scales.length;
+
+    charts.presClasses = new Chart(document.getElementById('presClasses'), {
+        type: 'bar',
+        data: {
+            labels: classes,
+            datasets: [{
+                label: 'Средний индекс %',
+                data: avgs,
+                backgroundColor: '#4f46e5'
+            }, {
+                label: 'Школа',
+                data: classes.map(() => schoolAvg),
+                type: 'line',
+                borderColor: '#dc2626',
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { min: 50, max: 80 } }
+        }
+    });
+
+    const deck = new Reveal({
+        hash: true,
+        transition: 'slide',
+        transitionSpeed: 'default',
+        controls: true,
+        progress: true,
+        center: false,
+        width: 1100,
+        height: 700
+    });
+    deck.initialize();
+    deck.on('slidechanged', () => Object.values(charts).forEach(c => c && c.resize && c.resize()));
+}
+
+main().catch(e => alert('Ошибка загрузки: ' + e.message));
+</script>
+</body>
+</html>
